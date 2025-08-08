@@ -1,108 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Operating System Quiz</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f4f4f4;
-        margin: 0;
-        padding: 20px;
-    }
-    h1 {
-        text-align: center;
-    }
-    .question {
-        background: #fff;
-        padding: 15px;
-        margin: 10px 0;
-        border-radius: 5px;
-        box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-    .question p {
-        font-size: 18px;
-    }
-    .options label {
-        display: block;
-        padding: 5px 0;
-        cursor: pointer;
-    }
-    button {
-        display: block;
-        margin: 20px auto;
-        padding: 10px 20px;
-        background: #28a745;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-    button:hover {
-        background: #218838;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operating System Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin: 20px 0;
+        }
+        .options label {
+            display: block;
+            background: #eee;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options input {
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #28a745;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Operating System Quiz</h1>
+        <div id="quiz"></div>
+        <button onclick="submitQuiz()">Submit Quiz</button>
+        <div class="result" id="result"></div>
+    </div>
 
-<h1>Operating System Quiz</h1>
+    <script>
+        const quizData = [
+            { question: "1. Which of the following is not an operating system?", a: "Windows", b: "Linux", c: "Oracle", d: "DOS", correct: "c" },
+            { question: "2. The main function of the command interpreter is:", a: "To get and execute the next user-specified command", b: "To provide the interface between the API and application program", c: "Handle I/O operations", d: "None of these", correct: "a" },
+            { question: "3. In operating systems, which of the following is a real-time system?", a: "Airline ticket reservation", b: "Process control", c: "Word processing", d: "All of the above", correct: "b" },
+            { question: "4. What is the maximum length of the filename in DOS?", a: "4", b: "5", c: "8", d: "12", correct: "c" },
+            { question: "5. Which of the following is the core of the operating system?", a: "Shell", b: "Kernel", c: "Command", d: "Script", correct: "b" },
+            { question: "6. The Banker's algorithm is used for:", a: "Deadlock prevention", b: "Deadlock avoidance", c: "Deadlock detection", d: "None of these", correct: "b" },
+            { question: "7. Which scheduling algorithm gives the minimum average waiting time?", a: "FCFS", b: "SJF", c: "Round Robin", d: "Priority", correct: "b" },
+            { question: "8. Which of the following is not a type of OS?", a: "Batch", b: "Time-sharing", c: "Distributed", d: "Compiler-based", correct: "d" },
+            { question: "9. Virtual memory is:", a: "An extremely large main memory", b: "An extremely large secondary memory", c: "An illusion of extremely large main memory", d: "None of these", correct: "c" },
+            { question: "10. Which of the following is a page replacement algorithm?", a: "FIFO", b: "LRU", c: "Optimal", d: "All of the above", correct: "d" },
+            { question: "11. Which is the first program that runs on a computer when the computer boots up?", a: "System software", b: "Operating system", c: "BIOS", d: "Loader", correct: "c" },
+            { question: "12. Which of the following is a disk scheduling algorithm?", a: "FCFS", b: "SCAN", c: "SSTF", d: "All of the above", correct: "d" },
+            { question: "13. In Unix, which command is used to list all files in a directory?", a: "ls", b: "dir", c: "list", d: "show", correct: "a" },
+            { question: "14. What is thrashing in OS?", a: "Swapping data frequently between main memory and disk", b: "Spooling", c: "Deadlock", d: "Page fault", correct: "a" },
+            { question: "15. Which of the following is used for inter-process communication?", a: "Pipes", b: "Message queues", c: "Shared memory", d: "All of the above", correct: "d" },
+            { question: "16. What does DMA stand for?", a: "Direct Memory Access", b: "Disk Memory Allocation", c: "Direct Module Allocation", d: "None", correct: "a" },
+            { question: "17. The 'ping' command is used to:", a: "Check network connectivity", b: "Check memory usage", c: "Check CPU usage", d: "Check disk space", correct: "a" },
+            { question: "18. Which file system is used in Windows?", a: "NTFS", b: "ext3", c: "HFS", d: "FAT", correct: "a" },
+            { question: "19. What is the default shell in Linux?", a: "bash", b: "sh", c: "csh", d: "zsh", correct: "a" },
+            { question: "20. Which OS is developed by Apple?", a: "Windows", b: "Linux", c: "macOS", d: "Unix", correct: "c" }
+        ];
 
-<div id="quiz-container"></div>
-<button onclick="checkAnswers()">Submit</button>
-
-<script>
-const quizData = [
-    {
-        question: "Which of the following is an example of a real-time operating system?",
-        options: ["Windows 10", "Linux", "RTLinux", "MS-DOS"],
-        answer: 2
-    },
-    {
-        question: "In OS, what is a semaphore used for?",
-        options: ["Memory allocation", "Process synchronization", "File management", "Deadlock creation"],
-        answer: 1
-    },
-    {
-        question: "Which scheduling algorithm gives priority to the process that arrives first?",
-        options: ["Shortest Job Next", "Round Robin", "First Come First Serve", "Priority Scheduling"],
-        answer: 2
-    }
-];
-
-function loadQuiz() {
-    const quizContainer = document.getElementById('quiz-container');
-    quizData.forEach((q, index) => {
-        const questionDiv = document.createElement('div');
-        questionDiv.classList.add('question');
-        questionDiv.innerHTML = `
-            <p><strong>Q${index + 1}:</strong> ${q.question}</p>
-            <div class="options">
-                ${q.options.map((option, i) => `
-                    <label>
-                        <input type="radio" name="q${index}" value="${i}"> ${option}
-                    </label>
-                `).join('')}
-            </div>
-        `;
-        quizContainer.appendChild(questionDiv);
-    });
-}
-
-function checkAnswers() {
-    let score = 0;
-    quizData.forEach((q, index) => {
-        const selected = document.querySelector(`input[name="q${index}"]:checked`);
-        if (selected && parseInt(selected.value) === q.answer) {
-            score++;
+        function loadQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            quizContainer.innerHTML = '';
+            quizData.forEach((q, index) => {
+                quizContainer.innerHTML += `
+                    <div class="question">
+                        <p>${q.question}</p>
+                        <div class="options">
+                            <label><input type="radio" name="q${index}" value="a"> ${q.a}</label>
+                            <label><input type="radio" name="q${index}" value="b"> ${q.b}</label>
+                            <label><input type="radio" name="q${index}" value="c"> ${q.c}</label>
+                            <label><input type="radio" name="q${index}" value="d"> ${q.d}</label>
+                        </div>
+                    </div>
+                `;
+            });
         }
-    });
-    alert(`You scored ${score} out of ${quizData.length}`);
-}
 
-loadQuiz();
-</script>
+        function submitQuiz() {
+            let score = 0;
+            quizData.forEach((q, index) => {
+                const answer = document.querySelector(`input[name="q${index}"]:checked`);
+                if (answer && answer.value === q.correct) {
+                    score++;
+                }
+            });
+            document.getElementById('result').innerText = `You scored ${score} out of ${quizData.length}`;
+        }
 
+        loadQuiz();
+    </script>
 </body>
 </html>
