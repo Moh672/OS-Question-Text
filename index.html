@@ -1,133 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>OS Objective Quiz</title>
-    <meta charset="UTF-8">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f9f9f9;
-        }
-        h1 {
-            color: #333;
-        }
-        .question {
-            margin-bottom: 15px;
-            background: white;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
-        }
-        button {
-            padding: 10px;
-            margin-top: 10px;
-            background: green;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operating System Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+    }
+    .question {
+        background: #fff;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+        font-size: 18px;
+    }
+    .options label {
+        display: block;
+        padding: 5px 0;
+        cursor: pointer;
+    }
+    button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #218838;
+    }
+</style>
 </head>
 <body>
 
-<h1>Operating System Objective Quiz</h1>
+<h1>Operating System Quiz</h1>
 
-<form id="quizForm">
-    <div class="question">
-        <p>1. Which software is used for creating documents?</p>
-        <input type="radio" name="q1" value="ms word"> MS Word<br>
-        <input type="radio" name="q1" value="excel"> MS Excel<br>
-    </div>
-
-    <div class="question">
-        <p>2. Which program reads and executes commands?</p>
-        <input type="radio" name="q2" value="command interperter"> Command Interpreter<br>
-        <input type="radio" name="q2" value="editor"> Text Editor<br>
-    </div>
-
-    <div class="question">
-        <p>3. Process of improving compiled code efficiency is called?</p>
-        <input type="radio" name="q3" value="compiler optimization"> Compiler Optimization<br>
-        <input type="radio" name="q3" value="debugging"> Debugging<br>
-    </div>
-
-    <div class="question">
-        <p>4. Which OS type reacts to input instantly?</p>
-        <input type="radio" name="q4" value="real time"> Real-time<br>
-        <input type="radio" name="q4" value="batch"> Batch<br>
-    </div>
-
-    <div class="question">
-        <p>5. The software that manages hardware and software is called?</p>
-        <input type="radio" name="q5" value="operating system"> Operating System<br>
-        <input type="radio" name="q5" value="firmware"> Firmware<br>
-    </div>
-
-    <div class="question">
-        <p>6. State where process is ready to run but waiting for CPU?</p>
-        <input type="radio" name="q6" value="ready"> Ready<br>
-        <input type="radio" name="q6" value="waiting"> Waiting<br>
-    </div>
-
-    <div class="question">
-        <p>7. Which module gives control of CPU to the process?</p>
-        <input type="radio" name="q7" value="dispatcher"> Dispatcher<br>
-        <input type="radio" name="q7" value="loader"> Loader<br>
-    </div>
-
-    <div class="question">
-        <p>8. Which scheduling executes jobs in arrival order?</p>
-        <input type="radio" name="q8" value="fcfs"> FCFS<br>
-        <input type="radio" name="q8" value="round robin"> Round Robin<br>
-    </div>
-
-    <div class="question">
-        <p>9. Scheduling where each process gets fixed time slice?</p>
-        <input type="radio" name="q9" value="round robin"> Round Robin<br>
-        <input type="radio" name="q9" value="priority"> Priority Scheduling<br>
-    </div>
-
-    <div class="question">
-        <p>10. Which scheduling is also known as First Come First Serve?</p>
-        <input type="radio" name="q10" value="fcfs"> FCFS<br>
-        <input type="radio" name="q10" value="sjf"> SJF<br>
-    </div>
-
-    <button type="button" onclick="checkAnswers()">Submit</button>
-</form>
-
-<h2 id="result"></h2>
+<div id="quiz-container"></div>
+<button onclick="checkAnswers()">Submit</button>
 
 <script>
-    function checkAnswers() {
-        const correctAnswers = {
-            q1: "ms word",
-            q2: "command interperter",
-            q3: "compiler optimization",
-            q4: "real time",
-            q5: "operating system",
-            q6: "ready",
-            q7: "dispatcher",
-            q8: "fcfs",
-            q9: "round robin",
-            q10: "fcfs"
-        };
-
-        let score = 0;
-        let total = Object.keys(correctAnswers).length;
-
-        for (let q in correctAnswers) {
-            let answer = document.querySelector(`input[name="${q}"]:checked`);
-            if (answer && answer.value === correctAnswers[q]) {
-                score++;
-            }
-        }
-
-        document.getElementById("result").innerText = 
-            `You got ${score} out of ${total} correct.`;
+const quizData = [
+    {
+        question: "Which of the following is an example of a real-time operating system?",
+        options: ["Windows 10", "Linux", "RTLinux", "MS-DOS"],
+        answer: 2
+    },
+    {
+        question: "In OS, what is a semaphore used for?",
+        options: ["Memory allocation", "Process synchronization", "File management", "Deadlock creation"],
+        answer: 1
+    },
+    {
+        question: "Which scheduling algorithm gives priority to the process that arrives first?",
+        options: ["Shortest Job Next", "Round Robin", "First Come First Serve", "Priority Scheduling"],
+        answer: 2
     }
+];
+
+function loadQuiz() {
+    const quizContainer = document.getElementById('quiz-container');
+    quizData.forEach((q, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.classList.add('question');
+        questionDiv.innerHTML = `
+            <p><strong>Q${index + 1}:</strong> ${q.question}</p>
+            <div class="options">
+                ${q.options.map((option, i) => `
+                    <label>
+                        <input type="radio" name="q${index}" value="${i}"> ${option}
+                    </label>
+                `).join('')}
+            </div>
+        `;
+        quizContainer.appendChild(questionDiv);
+    });
+}
+
+function checkAnswers() {
+    let score = 0;
+    quizData.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if (selected && parseInt(selected.value) === q.answer) {
+            score++;
+        }
+    });
+    alert(`You scored ${score} out of ${quizData.length}`);
+}
+
+loadQuiz();
 </script>
 
 </body>
